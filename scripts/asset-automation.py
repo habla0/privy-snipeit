@@ -22,14 +22,13 @@ from dotenv import load_dotenv
 load_dotenv() # Load environment variables from .env file
 
 token = os.getenv("API_KEY")
-print(token)
 
-'''
-with open("../data/Dummy data_new.csv", 'r') as datafile:
+
+with open("~/Documents/GitHub/privy-snipeit/data/Dummy data_new.csv", 'r') as datafile:
     csvreader = csv.reader(datafile)
     header = next(csvreader) # Skip header row
     
     for row in csvreader:
         print(row)
-'''
+
 
