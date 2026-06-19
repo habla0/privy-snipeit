@@ -41,14 +41,6 @@ r4 = requests.get(
             }            
 )
 locations = r4.json()
-r5 = requests.get(
-    "http://localhost:8000/api/v1/users",
-    headers = {"Authorization   ": f"Bearer {token}",
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-            }
-)
-users = r5.json()
 
 # Open CSV
 with open(dataPath, 'r') as datafile:
@@ -112,8 +104,3 @@ with open(dataPath, 'r') as datafile:
             print(f"[FAIL]: Failed to create asset {row[0]} with status {p2.status_code}.")
         else:
             print(f"[OK]: Asset {row[0]} added to Snipe-IT.")
-
-
-            
-
-
