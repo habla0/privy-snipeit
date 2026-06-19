@@ -1,20 +1,3 @@
-"""
-Step 1:
-    GET all asset information into program for cross-reference
-
-Step 2:
-    Read CSV file with asset information
-
-Step 3:
-    Check if asset exists in snipe-it
-
-Step 4:
-    Check if model exists in snipe-it
-    If not, create model and add to snipe-it
-
-Step 5:
-    Create the asset and add to snipe-it
-"""
 import os, csv, requests, json
 from dotenv import load_dotenv
 
@@ -73,8 +56,9 @@ with open(dataPath, 'r') as datafile:
     header = next(csvreader) # Skip header row
     
     for row in csvreader:
+        print(f"Checking Asset {row[0]}")
         if row[1] not in [model['name'] for model in models['rows']]: # Check if model exists in model data
-
+            print("Asset Model not in Snipe-IT, creating model.")
             # Create model in Snipe-IT
             newModelData = {
                 "name": row[1],
@@ -89,9 +73,12 @@ with open(dataPath, 'r') as datafile:
                         },
                 data = json.dumps(newModelData)
             )
-            print(f"Created model: {row[1]} with status code {p.status_code}")
+            if p.raise_for_status() is not None:
+                print(f"[FAIL]: Failed to create model {row[1]} with status {p.status_code}.")
+            else:
+                print(f"[OK]: Created Asset Model {row[1]} with status {p.status_code}.")
         else:
-            print(f"Model {row[1]} already exists in Snipe-IT, skipping model creation.")
+            print(f"{row[1]} already exists in Snipe-IT, skipping model creation.")
 
         # Add assets from CSV
         newAssetData = {
@@ -121,7 +108,10 @@ with open(dataPath, 'r') as datafile:
             data = json.dumps(newAssetData)
         )
 
-        print("All assets loaded into Snipe-IT!")
+        if p2.raise_for_status() is not None:
+            print(f"[FAIL]: Failed to create asset {row[0]} with status {p2.status_code}.")
+        else:
+            print(f"[OK]: Asset {row[0]} added to Snipe-IT.")
 
 
             
