@@ -75,17 +75,19 @@ with open(dataPath, 'r') as datafile:
             "rtd_location_id": next((location['id'] for location in getData('locations')['rows'] if location['name'] == row[14]), None), # Get location ID from name in CSV
         }
 
-        p2 = requests.post(
-            "http://localhost:8000/api/v1/hardware",
-            headers = {"Authorization": f"Bearer {token}",
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                    },
-            data = json.dumps(newAssetData)
-        )
+        print(newAssetData)
 
-        if p2.raise_for_status() is not None or p2.json().get('status') == 'error':
-            print(f"[FAIL]: Failed to create asset {row[0]} with status {p2.status_code}.")
-            print(p2.json())
-        else:
-            print(f"[OK]: Asset {row[0]} added to Snipe-IT.")
+        # p2 = requests.post(
+        #     "http://localhost:8000/api/v1/hardware",
+        #     headers = {"Authorization": f"Bearer {token}",
+        #             "Content-Type": "application/json",
+        #             "Accept": "application/json"
+        #             },
+        #     data = json.dumps(newAssetData)
+        # )
+
+        # if p2.raise_for_status() is not None or p2.json().get('status') == 'error':
+        #     print(f"[FAIL]: Failed to create asset {row[0]} with status {p2.status_code}.")
+        #     print(p2.json())
+        # else:
+        #     print(f"[OK]: Asset {row[0]} added to Snipe-IT.")
