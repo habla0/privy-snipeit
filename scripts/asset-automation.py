@@ -119,6 +119,4 @@ with open(dataPath, 'r') as datafile:
             "rtd_location_id": next((location['id'] for location in getData('locations').json()['rows'] if location['name'] == row[14]), None), # Get location ID from name in CSV
         }
 
-        print(newAssetData)
-
         p2 = postData('hardware', newAssetData)
