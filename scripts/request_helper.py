@@ -70,10 +70,7 @@ def postData(endpoint, data, invalidateAfter=None):
         return p
 
     payload = _safeJSON(p)
-    if payload.get("status") == "error":
-        print(f"[{'\033[31m'}FAIL{'\033[0m'}]: Failed to create object with status {p.status_code}.")
-        print(payload, "\n")
-    else:
+    if payload.get("status") != "error":
         print(f"[{'\033[32m'}OK{'\033[0m'}]: Created object with status {p.status_code}.\n")
 
     if invalidateAfter:
