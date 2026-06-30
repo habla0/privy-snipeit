@@ -1,3 +1,3 @@
 # privy-snipeit
 
-Set up your own .env file
+Download Docker and set up your own .env file using the .env.example file.
