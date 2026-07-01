@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 load_dotenv() # Load environment variables from .env file
 
 token = os.getenv("API_KEY")
+appURL = os.getenv("APP_URL")
 
 headers = {
     "Authorization": f"Bearer {token}",
@@ -36,7 +37,7 @@ def getData(endpoint, useCache=True, forceRefresh=False, ttl=_CACHE_TTL_SECONDS)
             return cached["response"]
 
     r = requests.get(
-        f"http://localhost:8000/api/v1/{endpoint}",
+        f"{appURL}/api/v1/{endpoint}",
         headers = headers
     )
 
@@ -56,7 +57,7 @@ def invalidateCache(*endpoints):
 
 def postData(endpoint, data, invalidateAfter=None):
     p = requests.post(
-        f"http://localhost:8000/api/v1/{endpoint}",
+        f"{appURL}/api/v1/{endpoint}",
         headers = headers,
         data = json.dumps(data)
     )
@@ -81,7 +82,7 @@ def postData(endpoint, data, invalidateAfter=None):
 
 def patchData(endpoint, assetID, data, invalidateAfter=None):
     p = requests.patch(
-        f"http://localhost:8000/api/v1/{endpoint}/{assetID}",
+        f"{appURL}/api/v1/{endpoint}/{assetID}",
         headers = headers,
         data = json.dumps(data)
     )
